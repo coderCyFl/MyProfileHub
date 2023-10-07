@@ -1,15 +1,19 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  webpack: (config) => {
+module.exports = {
+  webpack(config, options) {
+    const { isServer } = options;
     config.module.rules.push({
       test: /\.(ogg|mp3|wav|mpe?g)$/i,
+      exclude: config.exclude,
       use: [
         {
-          loader: "file-loader",
+          loader: require.resolve('url-loader'),
           options: {
-            name: "[name].[ext]",
-            outputPath: "static/media", // or any other directory you prefer
-            publicPath: "/_next/static/media", // or adjust as needed
+            limit: config.inlineImageLimit,
+            fallback: require.resolve('file-loader'),
+            publicPath: `${config.assetPrefix}/_next/static/images/`,
+            outputPath: `${isServer ? '../' : ''}static/images/`,
+            name: '[name]-[hash].[ext]',
+            esModule: config.esModule || false,
           },
         },
       ],
@@ -18,5 +22,3 @@ const nextConfig = {
     return config;
   },
 };
-
-module.exports = nextConfig;
