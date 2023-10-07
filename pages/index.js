@@ -18,7 +18,7 @@ import web2 from "../public/web2.png";
 import web3 from "../public/web3.png";
 import web4 from "../public/web4.png";
 import useSound from "use-sound";
-import backgroundMusic from "../music/sukidakara.mp3";
+import backgroundMusic from "../static/media/sukidakara.mp3";
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
